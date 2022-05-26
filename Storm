@@ -1,0 +1,95 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package storm;
+
+public class Storm {
+    private final double KnotsToMPH = 1.15D;
+    private String stormID;
+    private int beginDate;
+    private int duration;
+    private String name;
+    private int category;
+    private int wind;
+    private int pressure;
+
+    public Storm(String stormid, int bdate, int dur, String sname, int w, int p) {
+        this.stormID = stormid;
+        this.beginDate = bdate;
+        this.duration = dur;
+        this.name = sname;
+        this.wind = (int)((double)w * 1.15D);
+        this.pressure = p;
+        this.SaffirSimpson();
+    }
+
+    public void setDuration(int d) {
+        this.duration = d;
+    }
+
+    public void setWind(int w) {
+        w = (int)((double)w * 1.15D);
+        if (w > this.wind) {
+            this.wind = w;
+        }
+
+        this.SaffirSimpson();
+    }
+
+    public void setPressure(int p) {
+        if (this.pressure <= 0) {
+            this.pressure = p;
+        }
+
+        if (p > 0 && p < this.pressure) {
+            this.pressure = p;
+        }
+
+        this.SaffirSimpson();
+    }
+
+    public void SaffirSimpson() {
+        if (this.pressure <= 920 && this.wind >= 156) {
+            this.category = 5;
+        }
+
+        if (this.pressure > 920 && this.wind < 156) {
+            this.category = 4;
+        }
+
+        if (this.pressure > 945 && this.wind < 113) {
+            this.category = 3;
+        }
+
+        if (this.pressure > 965 && this.wind < 96) {
+            this.category = 2;
+        }
+
+        if (this.pressure > 980 && this.wind < 83) {
+            this.category = 1;
+        }
+
+        if (this.wind < 64) {
+            this.category = -1;
+        }
+
+        if (this.wind < 34) {
+            this.category = -2;
+        }
+
+        if (this.pressure == 0) {
+            this.category = 0;
+        }
+
+    }
+
+    public int getCategory() {
+        return this.category;
+    }
+
+    public String toString() {
+        return String.format("%s %9d %7d      %-10s %2d      %6d   %8d\n", this.stormID, this.beginDate, this.duration, this.name, this.category, this.wind, this.pressure);
+    }
+}
